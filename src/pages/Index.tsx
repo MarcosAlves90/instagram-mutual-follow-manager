@@ -3,6 +3,7 @@ import { Users, UserMinus, UserPlus, TrendingDown, TrendingUp } from 'lucide-rea
 import { FileUploader } from '@/components/FileUploader';
 import { UserCard } from '@/components/UserCard';
 import { StatsCard } from '@/components/StatsCard';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { parseInstagramHTML, compareFollowers } from '@/utils/parseFollowers';
@@ -111,7 +112,10 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-subtle">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
         {/* Header */}
-        <header className="text-center mb-12 animate-fade-in">
+        <header className="text-center mb-12 animate-fade-in relative">
+          <div className="absolute top-0 right-0">
+            <ThemeToggle />
+          </div>
           <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-primary bg-clip-text text-transparent">
             Análise de Seguidores
           </h1>
