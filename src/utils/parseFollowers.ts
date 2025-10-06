@@ -9,9 +9,22 @@ export const parseInstagramHTML = (htmlContent: string): Follower[] => {
   
   links.forEach((link) => {
     const href = link.getAttribute('href');
-    const username = link.textContent?.trim();
+    let username = link.textContent?.trim();
     
     if (href && username && href.includes('instagram.com')) {
+      // Se o username for uma URL, extrair do elemento anterior (h2)
+      if (username.includes('http') || username.includes('instagram.com')) {
+        const parentDiv = link.closest('div.pam');
+        const h2 = parentDiv?.querySelector('h2');
+        if (h2) {
+          username = h2.textContent?.trim() || username;
+        } else {
+          // Tentar extrair da URL
+          const urlMatch = href.match(/instagram\.com\/(?:_u\/)?([^/]+)/);
+          username = urlMatch ? urlMatch[1] : username;
+        }
+      }
+      
       // Find the date in the next div sibling
       const parent = link.closest('div');
       const dateDiv = parent?.querySelector('div:last-child');
