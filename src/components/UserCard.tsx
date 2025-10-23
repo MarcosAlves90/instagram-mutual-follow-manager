@@ -51,6 +51,9 @@ export const UserCard = ({ user, onStatusChange }: UserCardProps) => {
               <ExternalLink className="h-3.5 w-3.5 text-muted-foreground hover:text-primary transition-colors" />
             </a>
           </div>
+          {user.date && (
+            <p className="text-xs text-muted-foreground mb-2">{user.date}</p>
+          )}
           <Badge variant="outline" className="text-xs">
             {getStatusLabel(user.status)}
           </Badge>
