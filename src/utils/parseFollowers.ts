@@ -5,31 +5,28 @@ export const parseInstagramHTML = (htmlContent: string): Follower[] => {
   const doc = parser.parseFromString(htmlContent, 'text/html');
   
   const followers: Follower[] = [];
-  const links = doc.querySelectorAll('a[href*="instagram.com"]');
+  const cards = doc.querySelectorAll('div.pam');
   
-  links.forEach((link) => {
-    const href = link.getAttribute('href');
-    let username = link.textContent?.trim();
+  cards.forEach((card) => {
+    const h2 = card.querySelector('h2');
+    const link = card.querySelector('a[href*="instagram.com"]');
+    const contentDiv = card.querySelector('div._a6-p');
     
-    if (href && username && href.includes('instagram.com')) {
-      // Se o username for uma URL, extrair do elemento anterior (h2)
-      if (username.includes('http') || username.includes('instagram.com')) {
-        const parentDiv = link.closest('div.pam');
-        const h2 = parentDiv?.querySelector('h2');
-        if (h2) {
-          username = h2.textContent?.trim() || username;
-        } else {
-          // Tentar extrair da URL
-          const urlMatch = href.match(/instagram\.com\/(?:_u\/)?([^/]+)/);
-          username = urlMatch ? urlMatch[1] : username;
-        }
+    if (!h2 || !link) return;
+    
+    const username = h2.textContent?.trim();
+    const href = link.getAttribute('href');
+    
+    // Extrair a data do segundo div dentro do div._a6-p
+    let date: string | undefined;
+    if (contentDiv) {
+      const innerDivs = contentDiv.querySelectorAll('div > div');
+      if (innerDivs.length >= 2) {
+        date = innerDivs[1].textContent?.trim();
       }
-      
-      // Find the date in the next div sibling
-      const parent = link.closest('div');
-      const dateDiv = parent?.querySelector('div:last-child');
-      const date = dateDiv?.textContent?.trim();
-      
+    }
+    
+    if (username && href) {
       followers.push({
         username,
         profileUrl: href,
