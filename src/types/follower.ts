@@ -8,6 +8,7 @@ export interface FollowerStatus {
   username: string;
   profileUrl: string;
   status: 'neutral' | 'remove' | 'keep';
+  date?: string;
 }
 
 export interface AnalysisResult {
