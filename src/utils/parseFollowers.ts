@@ -5,28 +5,31 @@ export const parseInstagramHTML = (htmlContent: string): Follower[] => {
   const doc = parser.parseFromString(htmlContent, 'text/html');
   
   const followers: Follower[] = [];
-  const cards = doc.querySelectorAll('div.pam');
+  const links = doc.querySelectorAll('a[href*="instagram.com"]');
   
-  cards.forEach((card) => {
-    const h2 = card.querySelector('h2');
-    const link = card.querySelector('a[href*="instagram.com"]');
-    const contentDiv = card.querySelector('div._a6-p');
-    
-    if (!h2 || !link) return;
-    
-    const username = h2.textContent?.trim();
+  links.forEach((link) => {
     const href = link.getAttribute('href');
+    let username = link.textContent?.trim();
     
-    // Extrair a data do segundo div dentro do div._a6-p
-    let date: string | undefined;
-    if (contentDiv) {
-      const innerDivs = contentDiv.querySelectorAll('div > div');
-      if (innerDivs.length >= 2) {
-        date = innerDivs[1].textContent?.trim();
+    if (href && username && href.includes('instagram.com')) {
+      // Se o username for uma URL, extrair do elemento anterior (h2)
+      if (username.includes('http') || username.includes('instagram.com')) {
+        const parentDiv = link.closest('div.pam');
+        const h2 = parentDiv?.querySelector('h2');
+        if (h2) {
+          username = h2.textContent?.trim() || username;
+        } else {
+          // Tentar extrair da URL
+          const urlMatch = href.match(/instagram\.com\/(?:_u\/)?([^/]+)/);
+          username = urlMatch ? urlMatch[1] : username;
+        }
       }
-    }
-    
-    if (username && href) {
+      
+      // Find the date in the next div sibling
+      const parent = link.closest('div');
+      const dateDiv = parent?.querySelector('div:last-child');
+      const date = dateDiv?.textContent?.trim();
+      
       followers.push({
         username,
         profileUrl: href,
@@ -42,17 +45,19 @@ export const compareFollowers = (
   followers: Follower[],
   following: Follower[]
 ): {
-  followingButNotFollowingBack: Follower[];
-  followersNotFollowingBack: Follower[];
+  followingButNotFollowingBack: string[];
+  followersNotFollowingBack: string[];
 } => {
   const followerUsernames = new Set(followers.map((f) => f.username));
   const followingUsernames = new Set(following.map((f) => f.username));
   
   const followingButNotFollowingBack = following
-    .filter((f) => !followerUsernames.has(f.username));
+    .filter((f) => !followerUsernames.has(f.username))
+    .map((f) => f.username);
     
   const followersNotFollowingBack = followers
-    .filter((f) => !followingUsernames.has(f.username));
+    .filter((f) => !followingUsernames.has(f.username))
+    .map((f) => f.username);
   
   return {
     followingButNotFollowingBack,

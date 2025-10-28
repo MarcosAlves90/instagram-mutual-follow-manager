@@ -41,19 +41,19 @@ const Index = () => {
 
     const comparison = compareFollowers(followers, following);
 
-    const followingButNotBack = comparison.followingButNotFollowingBack.map((f) => ({
-      username: f.username,
-      profileUrl: f.profileUrl,
-      date: f.date,
-      status: (selections[f.username] as 'remove' | 'keep' | 'neutral') || 'neutral',
-    }));
+    const followingButNotBack = following
+      .filter((f) => comparison.followingButNotFollowingBack.includes(f.username))
+      .map((f) => ({
+        ...f,
+        status: (selections[f.username] as 'remove' | 'keep' | 'neutral') || 'neutral',
+      }));
 
-    const followersNotBack = comparison.followersNotFollowingBack.map((f) => ({
-      username: f.username,
-      profileUrl: f.profileUrl,
-      date: f.date,
-      status: (selections[f.username] as 'remove' | 'keep' | 'neutral') || 'neutral',
-    }));
+    const followersNotBack = followers
+      .filter((f) => comparison.followersNotFollowingBack.includes(f.username))
+      .map((f) => ({
+        ...f,
+        status: (selections[f.username] as 'remove' | 'keep' | 'neutral') || 'neutral',
+      }));
 
     setFollowingButNotFollowingBack(followingButNotBack);
     setFollowersNotFollowingBack(followersNotBack);
