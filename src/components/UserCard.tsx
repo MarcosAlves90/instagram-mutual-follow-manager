@@ -1,4 +1,4 @@
-import { ExternalLink, X, Check, Circle } from 'lucide-react';
+import { ExternalLink, X, Check, Circle, Calendar } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -7,9 +7,10 @@ import { FollowerStatus } from '@/types/follower';
 interface UserCardProps {
   user: FollowerStatus;
   onStatusChange: (username: string, status: 'neutral' | 'remove' | 'keep') => void;
+  listType: 'following' | 'followers';
 }
 
-export const UserCard = ({ user, onStatusChange }: UserCardProps) => {
+export const UserCard = ({ user, onStatusChange, listType }: UserCardProps) => {
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'remove':
@@ -54,6 +55,14 @@ export const UserCard = ({ user, onStatusChange }: UserCardProps) => {
           <Badge variant="outline" className="text-xs">
             {getStatusLabel(user.status)}
           </Badge>
+          {user.date && (
+            <p className="text-xs text-muted-foreground mt-1 flex items-center gap-1">
+              <Calendar className="h-3.5 w-3.5" />
+              <span>
+                {listType === 'following' ? 'Você seguiu em' : 'Seguiu você em'} {user.date}
+              </span>
+            </p>
+          )}
         </div>
 
         <div className="flex gap-1">

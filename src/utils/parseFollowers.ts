@@ -25,10 +25,16 @@ export const parseInstagramHTML = (htmlContent: string): Follower[] => {
         }
       }
       
-      // Find the date in the next div sibling
-      const parent = link.closest('div');
-      const dateDiv = parent?.querySelector('div:last-child');
-      const date = dateDiv?.textContent?.trim();
+      // Find the date from Instagram export structure
+      const container = link.closest('div._a6-p') || link.closest('div.pam') || link.closest('div');
+      let date: string | undefined;
+      if (container) {
+        const innerDivs = Array.from(container.querySelectorAll('div'));
+        const candidate = innerDivs.at(-1)?.textContent?.trim();
+        if (candidate && candidate.length > 0) {
+          date = candidate;
+        }
+      }
       
       followers.push({
         username,

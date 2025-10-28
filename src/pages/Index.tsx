@@ -208,6 +208,7 @@ const Index = () => {
                         key={user.username}
                         user={user}
                         onStatusChange={handleStatusChange}
+                        listType="following"
                       />
                     ))}
                   </div>
@@ -242,6 +243,7 @@ const Index = () => {
                         key={user.username}
                         user={user}
                         onStatusChange={handleStatusChange}
+                        listType="followers"
                       />
                     ))}
                   </div>

@@ -7,6 +7,7 @@ export interface Follower {
 export interface FollowerStatus {
   username: string;
   profileUrl: string;
+  date?: string;
   status: 'neutral' | 'remove' | 'keep';
 }
 
