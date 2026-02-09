@@ -31,8 +31,26 @@ export const FileUploader = ({
   };
 
   return (
-    <Card className="shadow-card border-border/50 backdrop-blur-sm bg-card/95">
-      <CardContent className="p-6">
+    <Card className="glass-card">
+      <CardContent className="p-6 md:p-8 space-y-6">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
+          <div>
+            <p className="text-xs uppercase tracking-[0.3em] text-muted-foreground">Importação</p>
+            <h3 className="text-lg font-semibold">Envie seus arquivos do Instagram</h3>
+            <p className="text-sm text-muted-foreground">
+              Use os HTMLs de Seguidores e Seguindo para uma análise precisa.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-2">
+            <span className="glass-chip rounded-full px-3 py-1 text-xs text-muted-foreground">
+              Privado e local
+            </span>
+            <span className="glass-chip rounded-full px-3 py-1 text-xs text-muted-foreground">
+              Sem login
+            </span>
+          </div>
+        </div>
+
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-3">
             <Label
@@ -50,10 +68,10 @@ export const FileUploader = ({
                 onChange={(e) => handleFileUpload(e, onFollowersUpload)}
                 className="block w-full text-sm text-muted-foreground
                   file:mr-4 file:py-2.5 file:px-4
-                  file:rounded-lg file:border-0
+                  file:rounded-xl file:border file:border-white/15
                   file:text-sm file:font-semibold
-                  file:bg-gradient-primary file:text-primary-foreground
-                  hover:file:opacity-90 file:transition-all
+                  file:bg-white/10 file:text-foreground
+                  hover:file:bg-white/15 file:transition-all
                   file:cursor-pointer cursor-pointer
                   file:shadow-elegant"
               />
@@ -81,10 +99,10 @@ export const FileUploader = ({
                 onChange={(e) => handleFileUpload(e, onFollowingUpload)}
                 className="block w-full text-sm text-muted-foreground
                   file:mr-4 file:py-2.5 file:px-4
-                  file:rounded-lg file:border-0
+                  file:rounded-xl file:border file:border-white/15
                   file:text-sm file:font-semibold
-                  file:bg-gradient-accent file:text-accent-foreground
-                  hover:file:opacity-90 file:transition-all
+                  file:bg-white/10 file:text-foreground
+                  hover:file:bg-white/15 file:transition-all
                   file:cursor-pointer cursor-pointer
                   file:shadow-elegant"
               />

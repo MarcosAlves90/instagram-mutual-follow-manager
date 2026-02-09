@@ -12,16 +12,18 @@ export const StatsCard = ({ title, value, icon: Icon, gradient }: StatsCardProps
   const bgGradient = gradient === 'primary' ? 'bg-gradient-primary' : 'bg-gradient-accent';
 
   return (
-    <Card className="overflow-hidden shadow-card border-border/50 backdrop-blur-sm bg-card/95">
-      <CardContent className="p-6">
-        <div className="flex items-center justify-between">
-          <div className="space-y-1">
+    <Card className="overflow-hidden glass-card">
+      <CardContent className="p-6 md:p-7">
+        <div className="flex items-center justify-between gap-6">
+          <div className="space-y-2">
+            <p className="text-xs uppercase tracking-[0.28em] text-muted-foreground">Resumo</p>
             <p className="text-sm font-medium text-muted-foreground">{title}</p>
-            <p className="text-3xl font-bold bg-gradient-primary bg-clip-text text-transparent">
+            <p className="text-4xl font-semibold text-white">
               {value}
             </p>
           </div>
-          <div className={`p-3 rounded-xl ${bgGradient} shadow-glow`}>
+          <div className={`p-3 rounded-2xl ${bgGradient} shadow-glow`}
+          >
             <Icon className="h-6 w-6 text-white" />
           </div>
         </div>

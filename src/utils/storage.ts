@@ -1,8 +1,8 @@
-import { FollowerStatus } from '@/types/follower';
+import { SelectionMap } from '@/types/follower';
 
 const STORAGE_KEY = 'follower-analysis-selections';
 
-export const saveSelections = (selections: Record<string, 'remove' | 'keep' | 'neutral'>) => {
+export const saveSelections = (selections: SelectionMap) => {
   try {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(selections));
   } catch (error) {
@@ -10,7 +10,7 @@ export const saveSelections = (selections: Record<string, 'remove' | 'keep' | 'n
   }
 };
 
-export const loadSelections = (): Record<string, 'remove' | 'keep' | 'neutral'> => {
+export const loadSelections = (): SelectionMap => {
   try {
     const saved = localStorage.getItem(STORAGE_KEY);
     return saved ? JSON.parse(saved) : {};
