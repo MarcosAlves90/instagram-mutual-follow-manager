@@ -1,49 +1,72 @@
 # Instagram Mutual Manager
 
-A modern web application developed to manage and visualize mutual connections on Instagram. This project provides an intuitive interface for analyzing followers using interactive charts and data tables.
+A local-only web utility for comparing Instagram follower/following exports and classifying asymmetric relationships.
 
-## 🚀 Technologies
+## What it does
 
-This project is built with the leading technologies in the React ecosystem:
+1. Reads the HTML files exported by Instagram for followers and following.
+2. Extracts and canonicalizes Instagram profile usernames locally.
+3. Computes who you follow that does not follow you back and who follows you that you do not follow back.
+4. Lets you mark each result as **Keep**, **Undecided**, or **Remove**.
+5. Stores only those decisions and appearance preferences in browser `localStorage`, scoped to a deterministic dataset identity.
 
-- **[React](https://reactjs.org/)** + **[TypeScript](https://www.typescriptlang.org/)** - The application core.
-- **[Vite](https://vitejs.dev/)** - Next Generation Frontend Tooling.
-- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework.
-- **[shadcn/ui](https://ui.shadcn.com/)** - Reusable components built with Radix UI and Tailwind CSS.
-- **[TanStack Query](https://tanstack.com/query/latest)** - Powerful asynchronous state management.
-- **[Recharts](https://recharts.org/)** - Redefined chart library built with React and D3.
-- **[React Router](https://reactrouter.com/)** - Declarative routing for React.
+Raw imported HTML is never persisted or sent to a server.
 
-## 📦 Installation and Usage
+## Cupertino UI
 
-Prerequisites: Node.js installed (LTS version recommended).
+The interface is intentionally based on Cupertino interaction and visual semantics:
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/MarcosAlves90/self-ig-mutual-manager-website.git
-   cd self-ig-mutual-manager-website
-   ```
+- semantic system backgrounds and labels;
+- system blue/green/red action colors;
+- grouped elevated surfaces;
+- segmented controls for mutually exclusive result views;
+- compact native-like rows;
+- system, light, and dark appearance;
+- system font stack (`-apple-system`, `BlinkMacSystemFont`, `Segoe UI` fallback);
+- reduced-motion support.
 
-2. **Install dependencies**
-   ```bash
-   npm install
-   # or
-   bun install
-   ```
+It does not reuse the legacy Black Glass/shadcn visual system.
 
-3. **Start the development server**
-   ```bash
-   npm run dev
-   ```
-   The app will be available at `http://localhost:5173`.
+## Run
 
-## 🛠️ Available Scripts
+Requirements:
 
-- `npm run dev`: Starts the development environment.
-- `npm run build`: Builds the app for production.
-- `npm run lint`: Runs ESLint for code quality.
-- `npm run preview`: Locally previews the production build.
+- Node.js 22+
 
-## 📄 License
+Build and serve:
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+```bash
+npm run build
+npm run dev
+```
+
+Then open `http://127.0.0.1:4173`.
+
+`npm run dev` serves `dist`, so run `npm run build` after source changes.
+
+## Validation
+
+The repository has no runtime or test dependencies. The test suite uses Node's built-in test runner. Static JSDoc type checking additionally requires a `tsc` executable (TypeScript 5.x) on `PATH`.
+
+```bash
+npm test
+npm run coverage
+npm run build
+npm run smoke
+```
+
+Full producer validation in the development environment:
+
+```bash
+npm run validate
+```
+
+The coverage command gates project-wide production JavaScript line coverage at strictly greater than 80%.
+
+## Architecture
+
+See [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) and [`docs/PRODUCT_CONTRACT.md`](docs/PRODUCT_CONTRACT.md).
+
+## Privacy boundary
+
+The application deliberately has no backend, telemetry, authentication, Instagram API integration, or follow/unfollow automation. Imported HTML is treated as untrusted data and is parsed as text; it is never injected into the application DOM.

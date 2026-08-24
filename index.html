@@ -1,34 +1,22 @@
 <!doctype html>
-<html lang="pt-BR" class="dark">
+<html lang="pt-BR" data-theme="system">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Self IG Mutual Manager | Análise de Seguidores do Instagram</title>
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'"
+    />
+    <meta name="color-scheme" content="light dark" />
     <meta
       name="description"
-      content="Analise seguidores e seguindo do Instagram, descubra quem não segue de volta e organize suas conexões com clareza e privacidade."
+      content="Analise localmente quem segue você e quem você segue no Instagram a partir dos dados exportados."
     />
-    <meta name="author" content="Self IG Mutual Manager" />
-    <meta name="robots" content="index,follow" />
-    <meta name="theme-color" content="#0a0a12" />
-    <meta name="color-scheme" content="dark" />
-    <link rel="icon" href="/favicon.png" />
-    <link rel="apple-touch-icon" href="/favicon.png" />
-
-    <meta property="og:title" content="Self IG Mutual Manager | Análise de Seguidores" />
-    <meta property="og:description" content="Analise seguidores e seguindo do Instagram, descubra quem não segue de volta e organize suas conexões com clareza e privacidade." />
-    <meta property="og:type" content="website" />
-    <meta property="og:locale" content="pt_BR" />
-    <meta property="og:image" content="/placeholder.svg" />
-
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Self IG Mutual Manager | Análise de Seguidores" />
-    <meta name="twitter:description" content="Analise seguidores e seguindo do Instagram, descubra quem não segue de volta e organize suas conexões com clareza e privacidade." />
-    <meta name="twitter:image" content="/placeholder.svg" />
+    <title>Instagram Mutual Manager</title>
+    <link rel="stylesheet" href="./src/styles/cupertino.css" />
   </head>
-
   <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
+    <main id="app" aria-live="polite"></main>
+    <script type="module" src="./src/main.js"></script>
   </body>
 </html>
